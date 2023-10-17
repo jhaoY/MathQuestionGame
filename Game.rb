@@ -16,12 +16,9 @@ class Game
     announce_winner
   end
 
-  def game_over
-    @player1.lives == 0 || @player2.lives == 0
-  end
-
   def switch_turns
-    @current_player = @current_player == @player1 ? @player1 : @player2 
+    puts "-------NEW TURN--------"
+    @current_player = @current_player == @player1 ? @player2 : @player1
   end
 
   def play_turn
@@ -29,29 +26,30 @@ class Game
     question.prompt_question
 
     print "#{current_player.name}, please input your answer: "
-    answer = gets.chomp
+    answer = gets.chomp.to_i
 
-    if (question.validate_answer(answer))
+    if question.validate_answer(answer)
       current_player.increment_score
-      puts "#{current_player} wins a point!"
+      puts "#{current_player.name} wins a point!"
     else
       current_player.lose_life
-      puts "#{current_player} loses a life!"
+      puts "#{current_player.name} loses a life!"
     end
   end
 
   def game_over?
-    @player1.lives == 0 || @player2.lives == 0
+    (@player1.lives == 0 || @player2.lives == 0) || (@player1.score == 3 || @player2.score == 3)
   end
 
   def display_scores
-    puts "#{player1} is at #{player1.score} points and #{player1.lives} lives"
-    puts "#{player2} is at #{player2.score} points and #{player2.lives} lives"
+    puts "#{player1.name}: #{player1.score}/3"
+    puts "#{player2.name}: #{player2.score}/3"
   end
 
   def announce_winner
-    winner = player1.lives > 0 ? player1 : player2
-    puts "The winner is #{winner.name}! with a score of #{winner.scores}"
+    winner = player1.score == 3 ? player1 : player2
+    puts "The winner is #{winner.name}! with a score of #{winner.score}"
   end
+end
 
 

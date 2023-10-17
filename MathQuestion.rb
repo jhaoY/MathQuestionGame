@@ -6,7 +6,7 @@ class MathQuestion
   end
 
   def prompt_question
-    puts "What is #{@number1} + #{number2}?"
+    puts "What is #{@number1} + #{@number2}?"
   end
 
   def validate_answer(provided_answer)
